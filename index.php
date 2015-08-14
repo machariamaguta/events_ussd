@@ -77,6 +77,10 @@ else
 				echo "END Entry Invalid. Please try again!";
 				exit;
 			}
+			$search_sql="SELECT * FROM events WHERE phoneNumber='$phoneNumber'";
+			$search_result=mysql_query($search_sql);
+			if(mysql_num_rows($search_result)==0)
+			{
 			$insert_sql="INSERT INTO events (phoneNumber,$column) VALUES('$phoneNumber','1')";
 			$insert_results=mysql_query($insert_sql);
 			if($insert_results==1)
@@ -87,6 +91,23 @@ else
 			else
 			{
 				echo "END Error occured! Please try again later!";
+			}
+			}
+			else if(mysql_num_rows($search_result)==1)
+			{
+				echo "END Running!";
+				exit;
+			$update_sql="UPDATE events SET `$column`='1' WHERE `phoneNumber`='$phoneNumber'";
+			$update_results=mysql_query($update_sql);
+			if(mysql_num_rows($update_results)==1)
+			{
+				echo "END You've successfully registered to receive notifications for $column Events";
+				exit;
+			}
+			else
+			{
+				echo "END Error occured! Please try again later!";
+			}
 			}
 			break;
 		
